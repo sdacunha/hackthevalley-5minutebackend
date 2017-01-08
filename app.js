@@ -28,6 +28,7 @@ io.on('connection', function(socket){
     });
     socket.on('clear-beacon', function() {
         if(beacon != undefined) {
+            console.log("Beacon cleared!");
             beacon.emit('clear');
         }
     });
