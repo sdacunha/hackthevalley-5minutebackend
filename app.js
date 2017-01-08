@@ -2,16 +2,21 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var phones = {}
+
 app.get('/', function(req, res){
     res.sendfile('index.html');
 });
 
 io.on('connection', function(socket){
     socket.on('beacon-ping', function(msg){
-        console.log('message: ' + msg);
+        phones[msg].emit("ping");
+    });
+    socket.on('beacon-purchased', function(msg){
+        phones[msg].emit("purchased");
     });
     socket.on('phone', function(msg){
-        console.log('message: ' + msg);
+        phones[msg] = socket
     });
 });
 
