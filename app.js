@@ -3,7 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var phones = {};
-var beacon;
+var beacon = undefined;
 
 app.get('/', function(req, res){
     res.sendfile('index.html');
