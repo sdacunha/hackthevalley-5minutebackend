@@ -12,6 +12,7 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
     socket.on('beacon-setup', function() {
         beacon = socket;
+        console.log("Beacon setup!");
     });
     socket.on('beacon-ping', function(msg){
         if (phones[msg] != undefined) {
@@ -26,7 +27,9 @@ io.on('connection', function(socket){
         console.log("Beacon sent purchased ping to " + msg);
     });
     socket.on('clear-beacon', function() {
-        beacon.emit('clear');
+        if(beacon != undefined) {
+            beacon.emit('clear');
+        }
     });
     socket.on('phone', function(msg){
         phones[msg] = socket
