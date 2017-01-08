@@ -10,11 +10,15 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     socket.on('beacon-ping', function(msg){
-        phones[msg].emit("ping");
+        if (phones[msg] != undefined) {
+            phones[msg].emit("ping");
+        }
         console.log("Beacon sent purchase ping to " + msg);
     });
     socket.on('beacon-purchased', function(msg){
-        phones[msg].emit("purchased");
+        if (phones[msg] != undefined) {
+            phones[msg].emit("purchased");
+        }
         console.log("Beacon sent purchased ping to " + msg);
     });
     socket.on('phone', function(msg){
