@@ -4,8 +4,14 @@
     <title>Nothing to see here</title>
 
 </head>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <body>
-
-<ul id="messages"></ul>
+<script>
+    var socket = io.connect("http://52.229.115.195/");
+    function clearButton() {
+        socket.emit('clear-beacon');
+    }
+</script>
+<button onclick="clearButton()"></button>
 </body>
 </html>

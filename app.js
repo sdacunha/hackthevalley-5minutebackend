@@ -2,13 +2,17 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var phones = {}
+var phones = {};
+var beacon;
 
 app.get('/', function(req, res){
     res.sendfile('index.html');
 });
 
 io.on('connection', function(socket){
+    socket.on('beacon-setup', function() {
+        beacon = socket;
+    });
     socket.on('beacon-ping', function(msg){
         if (phones[msg] != undefined) {
             phones[msg].emit("ping");
@@ -20,6 +24,9 @@ io.on('connection', function(socket){
             phones[msg].emit("purchased");
         }
         console.log("Beacon sent purchased ping to " + msg);
+    });
+    socket.on('clear-beacon', function() {
+        beacon.emit('clear');
     });
     socket.on('phone', function(msg){
         phones[msg] = socket
