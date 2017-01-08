@@ -28,8 +28,8 @@ io.on('connection', function(socket){
     });
     socket.on('clear-beacon', function() {
         console.log("Beacon cleared!");
+        console.log(beacon);
         beacon.emit('clear');
-
     });
     socket.on('phone', function(msg){
         phones[msg] = socket
